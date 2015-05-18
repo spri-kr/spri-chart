@@ -1,0 +1,43 @@
+.img.option_chart_type:first-child{
+    float:left;
+    clear:both;
+}
+img.option_chart_type{
+    border:2px solid gray;
+    border-radius: 15px;
+    width:100px;
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+img.option_chart_type:hover{
+    opacity: 1.0;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
+}
+
+img.chart_type_selected{
+    border:2px solid green;
+    opacity: 1.0;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
+}
+
+.chart_detailed_option.form-group label{
+    display: block;
+}
+
+.radio-inline {
+    margin: 2px;
+    padding: 2px;
+}
+
+.space10 {
+    height:15px;
+    min-height : 15px;
+}
+
+
+#chart_option_editor, #chart_data_editor{
+    position: relative;
+    width: 600px;
+    height: 200px;
+}
