@@ -3,7 +3,7 @@
 Plugin Name: SPRI Chart
 Plugin URI: http://spri.krt
 Description: 통계 차트생성  플러그인
-Author: binggle@live.co.kr, ungsik.yun@gmail.com
+Author: binggle@live.co.kr
 Version: 0.4
 Author URI: http://spri.krt
 */
@@ -21,7 +21,7 @@ function spri_chart_admin_page( ) {
 
 //	echo plugin_dir_url(__FILE__) ;
 ?>
-	<styl
+	<style>
 		.view-chart {
 			padding-right: 5px;
 			cursor: hand  ;
