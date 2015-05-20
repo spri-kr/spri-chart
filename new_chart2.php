@@ -249,7 +249,7 @@ $chart_url = $chart_type . ".php?key=" . $key;
                                 width:"100%",
                                 height:"400",
 								title: "<?php echo $chart_unit; ?>",
-								titlePostition: 'out',
+								titlePostition: 'none',
 								legend:{
 									position:"top",
 									alignment:"center"
