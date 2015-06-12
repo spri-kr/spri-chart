@@ -14,6 +14,8 @@ add_action( 'wp_head', 'my_custom_js' );
 
 function my_custom_js() {
 	echo '   <script type="text/javascript" src="https://www.google.com/jsapi"></script>';
+	wp_enqueue_script( 'spri_add_new_chart',
+		plugins_url( '/js/add_new_chart.js', __FILE__ ), array( 'jquery' ) );
 }
 
 function spri_chart_create_menu() {
@@ -28,10 +30,24 @@ function spri_chart_admin_page() {
 	<div class="wrap">
 		<h4> SPRI Chart Management </h4>
 	</div>
+	<style>
+		.display-none{
+			display: none;
+		}
+	</style>
 	<?php
 
 	echo "
-<input type='button' value='Add new chart' onclick=''>
+<input type='button' value='Add new chart' id='show_add'>
+
+<div class='add_new_chart'>
+<form action='wp_ajax.php'>
+<input type=file/>
+</form>
+
+
+</div>
+
 <div id='spri_chart_list'>
 	<script type='text/javascript'>
 		google.load('visualization', '1', {packages: ['corechart']});
@@ -142,6 +158,7 @@ function spri_ajax() {
 function spri_ajax_hook( $hook ) {
 	wp_enqueue_script( 'spri_ajax_script',
 		plugins_url( '/js/local_ajax.js', __FILE__ ), array( 'jquery' ) );
+
 	wp_localize_script( 'spri_ajax_script', 'ajax_object',
 		array(
 			'ajax_url'   => admin_url( 'admin-ajax.php' ),
