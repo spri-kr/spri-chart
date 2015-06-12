@@ -28,47 +28,55 @@ function spri_chart_admin_page() {
 	<div class="wrap">
 		<h4> SPRI Chart Management </h4>
 	</div>
-<?php
-	echo "<div id='spri_chart_list'>";
-	echo "<script type='text/javascript'>
-google.load('visualization', '1', {packages: ['corechart']});
-</script>";
-	foreach ( spri_chart_db_get_whole_data() as $item ) {
-		echo "<div id='$item->id'>";
-		echo "<div>title: $item->title</div>";
-		echo "<div id='chart_$item->id' class='draw'></div>";
+	<?php
 
-		echo "<script type='text/javascript' class='chart_data'>
-	var data_$item->id = $item->chart_data ;
+	echo "
+<input type='button' value='Add new chart' onclick=''>
+<div id='spri_chart_list'>
+	<script type='text/javascript'>
+		google.load('visualization', '1', {packages: ['corechart']});
 	</script>";
-		echo "<script type='text/javascript' class='chart_opt'>
+
+	foreach ( spri_chart_db_get_whole_data() as $item ) {
+
+		echo "
+	<div id='$item->id' style='width: 700px; float: left;'>
+	<div>title: $item->title</div>
+
+	<div id='chart_canvas_$item->id' class='draw'></div>
+
+	<script type='text/javascript' class='chart_data'>
+		var data_$item->id = $item->chart_data ;
+	</script>
+
+	<script type='text/javascript' class='chart_opt'>
 	var option_$item->id = $item->chart_opt ;
-	</script>";
-		echo "<script type='text/javascript' class='chart_draw'>
+	</script>
+
+	<script type='text/javascript' class='chart_draw'>
 	jQuery(document).ready(function () {
-        var data;
+	    var data;
 		data = google.visualization.arrayToDataTable(data_$item->id);
 		var options = option_$item->id;
 		google.setOnLoadCallback(drawChart);
 		function drawChart() {
-			chart_$item->id = new google.visualization.$item->chart_type(document.getElementById('chart_$item->id'));
-			google.visualization.events.addListener(chart_$item->id, 'onmouseover', uselessHandler2);
-			google.visualization.events.addListener(chart_$item->id, 'onmouseout', uselessHandler3);
+			chart_canvas_$item->id = new google.visualization.$item->chart_type(document.getElementById('chart_canvas_$item->id'));
+			google.visualization.events.addListener(chart_canvas_$item->id, 'onmouseover', uselessHandler2);
+			google.visualization.events.addListener(chart_canvas_$item->id, 'onmouseout', uselessHandler3);
 			function uselessHandler2() {
-                jQuery('#chart_$item->id').css('cursor', 'pointer')
+	            jQuery('#chart_canvas_$item->id').css('cursor', 'pointer')
 			}
 			function uselessHandler3() {
-                jQuery('#chart_$item->id').css('cursor', 'default')
+	            jQuery('#chart_canvas_$item->id').css('cursor', 'default')
 			}
-			chart_$item->id.draw(data, options);
+			chart_canvas_$item->id.draw(data, options);
 		}
-        jQuery(window).resize(function () {
-            chart_$item->id.draw(data, options)
-        });
+	    jQuery(window).resize(function () {
+	        chart_canvas_$item->id.draw(data, options)
+	    });
 	});
-</script>";
-
-		echo "</div>";
+	</script>
+</div>";
 	}
 	echo "</div>";
 }
@@ -136,18 +144,18 @@ function spri_ajax_hook( $hook ) {
 		plugins_url( '/js/local_ajax.js', __FILE__ ), array( 'jquery' ) );
 	wp_localize_script( 'spri_ajax_script', 'ajax_object',
 		array(
-			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'we_value' => 1234,
+			'ajax_url'   => admin_url( 'admin-ajax.php' ),
+			'we_value'   => 1234,
 			'text_value' => 111111
 		) );
 }
 
-function spri_chart_db_get_whole_data(){
+function spri_chart_db_get_whole_data() {
 	global $wpdb;
 
-	return $wpdb->get_results("
+	return $wpdb->get_results( "
 		select * from wp_spri_chart
 		where chart_staus = 'p';
-	");
+	" );
 
 }
