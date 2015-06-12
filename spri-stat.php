@@ -8,30 +8,13 @@ Version: 0.4
 Author URI: http://spri.krt
 */
 
-add_action('admin_menu', 'spri_chart_create_menu');
 add_action('admin_head', 'my_custom_js');
 add_action('wp_head', 'my_custom_js');
-register_activation_hook(__FILE__, 'create_table');
-add_shortcode( 'spri_chart', 'spri_chart_getter' );
-
 function my_custom_js() {
 	echo '   <script type="text/javascript" src="https://www.google.com/jsapi"></script>';
 }
 
-function spri_chart_create_menu() {
-	add_menu_page('SPRI CHART', 'SPRI CHART', 'administrator', __FILE__, 'spri_chart_admin_page' , plugin_dir_url( __FILE__ ) ."/spri.ico" );
-}
-
-function spri_chart_admin_page( ) {
-	global $wpdb;
-	?>
-	<div class="wrap">
-		<h4> SPRI Chart Management </h4>
-	</div>
-
-<?php
-}
-
+register_activation_hook(__FILE__, 'create_table');
 function create_table() {
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
@@ -55,7 +38,25 @@ function create_table() {
 	}
 }
 
-function spri_chart_getter( $atts ) {
+add_action('admin_menu', 'spri_chart_create_menu');
+function spri_chart_create_menu() {
+	add_menu_page('SPRI CHART', 'SPRI CHART', 'administrator', __FILE__, 'spri_chart_admin_page' , plugin_dir_url( __FILE__ ) ."/spri.ico" );
+}
+// admin menu html
+function spri_chart_admin_page( ) {
+	global $wpdb;
+	?>
+	<div class="wrap">
+		<h4> SPRI Chart Management </h4>
+	</div>
+
+<?php
+}
+
+
+
+add_shortcode( 'spri_chart', 'spri_chart_draw_shortcode' );
+function spri_chart_draw_shortcode( $atts ) {
     global $wpdb;
 
     $a = shortcode_atts( array(
