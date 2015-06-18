@@ -1,6 +1,3 @@
-/**
- * Created by user on 15-6-12.
- */
 jQuery(document).ready(function($) {
     var data = {
         'action': 'spri_ajax',
@@ -12,9 +9,6 @@ jQuery(document).ready(function($) {
     });
 });
 
-/**
- * Created by user on 15-6-12.
- */
 jQuery(document).ready(function($) {
     jQuery('#show_add').click(
         function () {
