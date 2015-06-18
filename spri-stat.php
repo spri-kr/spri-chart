@@ -3,8 +3,8 @@
 Plugin Name: SPRI Chart
 Plugin URI: http://spri.krt
 Description: 통계 차트생성 플러그인 database 변경 작업
-Author: binggle@live.co.kr
-Version: 0.4
+Author: binggle@live.co.kr, ungsik.yun@gmail.com
+Version: 0.5
 Author URI: http://spri.krt
 */
 
