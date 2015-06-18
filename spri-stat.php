@@ -95,7 +95,9 @@ function spri_chart_admin_page() {
 <?php endforeach ?>
 
 </div>
+
 <?php
+//	end spri_chart_admin_page
 }
 
 register_activation_hook( __FILE__, 'create_table' );
