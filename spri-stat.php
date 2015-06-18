@@ -16,8 +16,11 @@ function include_scripts() {
 	echo '   <script type="text/javascript" src="https://www.google.com/jsapi"></script>';
 	wp_enqueue_script( 'spri_add_new_chart',
 		plugins_url( '/js/add_new_chart.js', __FILE__ ), array( 'jquery' ) );
-	wp_enqueue_style( 'spri-chart-css', plugins_url('css/custom.css',__FILE__ ));
-	echo plugins_url('css/custom.css', __FILE__ );
+	wp_enqueue_script( 'ajax_form_plugin',
+		plugins_url( '/js/jquery.form.js', __FILE__ ), array( 'jquery' ) );
+	wp_enqueue_style( 'spri-chart-css',
+		plugins_url( 'css/custom.css', __FILE__ ) );
+	echo plugins_url( 'css/custom.css', __FILE__ );
 }
 
 function spri_chart_create_menu() {
@@ -32,69 +35,69 @@ function spri_chart_admin_page() {
 	<div class="wrap">
 		<h4> SPRI Chart Management </h4>
 	</div>
-	<style>
-		.display-none{
-			display: none;
-		}
-	</style>
-<input type='button' value='Add new chart' id='show_add'>
 
-<div class='add_new_chart'>
-<form action='wp_ajax.php'>
-<input type=file/>
-</form>
+	<input type='button' value='Add new chart' id='show_add'>
 
+	<div class='add_new_chart'>
+		<form id="csv_file_upload">
+			<input type=file/>
+		</form>
 
-</div>
+	</div>
 
-<div id='spri_chart_list'>
-	<script type='text/javascript'>
-		google.load('visualization', '1', {packages: ['corechart']});
-	</script>
+	<div id='spri_chart_list'>
+		<script type='text/javascript'>
+			google.load('visualization', '1', {packages: ['corechart']});
+		</script>
 
-	<?php foreach( spri_chart_db_get_whole_data() as $item ): ?>
+		<?php foreach ( spri_chart_db_get_whole_data() as $item ): ?>
 
-	<div id='<?php echo $item->id ?>' style='width: 700px; float: left;'>
-	<div>title: <?php echo $item->title ?></div>
+			<div id='<?php echo $item->id ?>'
+			     style='width: 700px; float: left;'>
+				<div>title: <?php echo $item->title ?></div>
 
-	<div id='chart_canvas_<?php echo $item->id ?>' class='chart_draw'></div>
+				<div id='chart_canvas_<?php echo $item->id ?>'
+				     class='chart_draw'></div>
 
-	<script type='text/javascript' class='chart_data'>
-		var data_<?php echo $item->id  ?>= <?php echo $item->chart_data  ?>;
-	</script>
+				<script type='text/javascript' class='chart_data'>
+					var data_<?php echo $item->id  ?> = <?php echo $item->chart_data  ?>;
+				</script>
 
-	<script type='text/javascript' class='chart_opt'>
-	var option_<?php echo $item->id  ?>= <?php echo $item->chart_opt  ?>;
-	</script>
+				<script type='text/javascript' class='chart_opt'>
+					var option_<?php echo $item->id  ?> = <?php echo $item->chart_opt  ?>;
+				</script>
 
-	<script type='text/javascript' class='chart_draw'>
-	jQuery(document).ready(function () {
-	    var data;
-		data = google.visualization.arrayToDataTable(data_<?php echo $item->id ?>);
-		var options = option_<?php echo $item->id ?>;
-		google.setOnLoadCallback(drawChart);
-		function drawChart() {
-			chart_canvas_<?php echo $item->id  ?>= new google.visualization.<?php echo $item->chart_type ?>(document.getElementById('chart_canvas_<?php echo $item->id ?>'));
-			google.visualization.events.addListener(chart_canvas_<?php echo $item->id ?>, 'onmouseover', uselessHandler2);
-			google.visualization.events.addListener(chart_canvas_<?php echo $item->id ?>, 'onmouseout', uselessHandler3);
-			function uselessHandler2() {
-	            jQuery('#chart_canvas_<?php echo $item->id ?>').css('cursor', 'pointer')
-			}
-			function uselessHandler3() {
-	            jQuery('#chart_canvas_<?php echo $item->id ?>').css('cursor', 'default')
-			}
-			chart_canvas_<?php echo $item->id ?>.draw(data, options);
-		}
-	    jQuery(window).resize(function () {
-	        chart_canvas_<?php echo $item->id ?>.draw(data, options)
-	    });
-	});
-	</script>
-</div>
+				<script type='text/javascript' class='chart_draw'>
+					jQuery(document).ready(function () {
+						var data;
+						data = google.visualization.arrayToDataTable(data_<?php echo $item->id ?>);
+						var options = option_<?php echo $item->id ?>;
+						google.setOnLoadCallback(drawChart);
+						function drawChart() {
+							chart_canvas_<?php echo $item->id  ?> = new google.visualization.<?php echo $item->chart_type ?>(document.getElementById('chart_canvas_<?php echo $item->id ?>'));
+							google.visualization.events.addListener(chart_canvas_<?php echo $item->id ?>, 'onmouseover', uselessHandler2);
+							google.visualization.events.addListener(chart_canvas_<?php echo $item->id ?>, 'onmouseout', uselessHandler3);
+							function uselessHandler2() {
+								jQuery('#chart_canvas_<?php echo $item->id ?>').css('cursor', 'pointer')
+							}
 
-<?php endforeach ?>
+							function uselessHandler3() {
+								jQuery('#chart_canvas_<?php echo $item->id ?>').css('cursor', 'default')
+							}
 
-</div>
+							chart_canvas_<?php echo $item->id ?>.draw(data, options);
+						}
+
+						jQuery(window).resize(function () {
+							chart_canvas_<?php echo $item->id ?>.draw(data, options);
+						});
+					});
+				</script>
+			</div>
+
+		<?php endforeach ?>
+
+	</div>
 
 <?php
 //	end spri_chart_admin_page
@@ -107,7 +110,7 @@ function create_table() {
 	$table_name      = $wpdb->prefix . "spri_chart";
 
 	if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) != $table_name ) {
-		$sql = "CREATE TABLE $table_name (
+		$sql = 'CREATE TABLE $table_name (
 				id INT(11) NOT NULL AUTO_INCREMENT,
 				chart_id INT(11) NOT NULL,
 				chart_title VARCHAR(100) NOT NULL,
@@ -118,7 +121,7 @@ function create_table() {
 				chart_staus VARCHAR(10) NOT NULL,
 				PRIMARY KEY (id)
 				) $charset_collate;
-				";
+				';
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
 	}
