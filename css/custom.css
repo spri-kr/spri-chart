@@ -1,7 +1,11 @@
-.chart_draw {
-    padding: 20px;
-}
-
 .display-none {
     display: none;
+}
+
+#container_warp {
+    width: 90%;
+}
+
+.editor {
+    height: 400px;
 }
