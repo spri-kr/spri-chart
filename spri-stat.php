@@ -47,7 +47,7 @@ function spri_chart_create_menu() {
 function spri_chart_admin_page() {
 	global $wpdb;
 	?>
-	<div id="container_warp">
+	<div id="container_warp" xmlns="http://www.w3.org/1999/html">
 		<div class="container-fluid">
 
 			<div class="row">
@@ -58,83 +58,105 @@ function spri_chart_admin_page() {
 				<input class="btn btn-default" type='button' value='Add new chart' id='display_toggle'>
 			</div>
 
+			<div id="new_chart_area row">
+				<div class='add_new_chart row' id="add_new_chart_file_uploader">
+					<form id="csv_file_upload" class="form-inline" method="post"
+					      action="<?php echo admin_url( 'admin-ajax.php' ) ?>">
+						<div class="form-group">
+							<input class="form-control" name="csv_file" type="file"/>
+							<input class="form-control" type="submit"/>
+						</div>
+					</form>
+				</div>
+				<div id="chart_type_selector" class="add_new_chart row form-group">
+					<label class="radio-inline">
+					<input name="chart_type" type="radio" value="ColumnChart">Column Chart</input>
+					</label>
+					<label class="radio-inline">
+					<input name="chart_type" type="radio" value="BarChart">Bar Chart</input>
+					</label>
+					<label class="radio-inline">
+					<input name="chart_type" type="radio" value="ComboChart">Combo Chart</input>
+					</label>
+					<label class="radio-inline">
+					<input name="chart_type" type="radio" value="PieChart">Pie Chart</input>
+					</label>
+					<label class="radio-inline">
+					<input name="chart_type" type="radio" value="LineChart">Line Chart</input>
+					</label>
+				</div>
+				<div class="row">
+					<input id="chart_redraw" value="Redraw" type="button" class="btn btn-primary"/>
+				</div>
 
-			<div class='add_new_chart row' id="add_new_chart_file_uploader">
-				<form id="csv_file_upload" class="form-inline" method="post"
-				      action="<?php echo admin_url( 'admin-ajax.php' ) ?>">
-					<div class="form-group">
-						<input class="form-control" name="csv_file" type="file"/>
-						<input class="form-control" type="submit"/>
+				<div class="row" id="new_chart_draw_area"></div>
+
+				<div id="editor_area" class="add_new_chart row">
+					<div id="chart_data" class="editor_warp col-xs-6">
+						<script type="text/javascript"
+						        id="chart_data_script"></script>
+						<div>Data</div>
+						<div id="data_editor" class="editor"></div>
 					</div>
-				</form>
-			</div>
-
-			<div id="editor_area" class="add_new_chart row">
-				<div id="chart_data" class="editor_warp col-xs-6">
-					<script type="text/javascript"
-					        id="chart_data_script"></script>
-					<div>Data</div>
-					<div id="data_editor" class="editor"></div>
-				</div>
-				<div id="chart_option" class="editor_warp col-xs-6">
-					<script type="text/javascript"
-					        id="chart_option_script"></script>
-					<div>Option</div>
-					<div id="option_editor" class="editor"></div>
+					<div id="chart_option" class="editor_warp col-xs-6">
+						<script type="text/javascript"
+						        id="chart_option_script"></script>
+						<div>Option</div>
+						<div id="option_editor" class="editor"></div>
+					</div>
 				</div>
 			</div>
-
 			<div class="graph_list row">
-			<?php foreach (get_all_graph() as $item): ?>
-				<div id='<?php echo $item->id ?>' class="graph col-xs-6">
-					<div class="row">
+				<?php foreach ( get_all_graph() as $item ): ?>
+					<div id='<?php echo $item->id ?>' class="graph col-xs-6">
+						<div class="row">
 
-						<div class="col-xs-6">title: <?php echo $item->title ?></div>
-						<div class="col-xs-offset-6"></div>
-						<div id='chart_canvas_<?php echo $item->id ?>'
-						     class='chart_draw col-lg-12'></div>
+							<div class="col-xs-6">title: <?php echo $item->title ?></div>
+							<div class="col-xs-offset-6"></div>
+							<div id='chart_canvas_<?php echo $item->id ?>'
+							     class='chart_draw col-lg-12'></div>
 
-						<div id='spri_chart_list'>
-							<script type='text/javascript'>
-								google.load('visualization', '1', {packages: ['corechart']});
-							</script>
-							<script type='text/javascript' class='chart_data'>
-								var data_<?php echo $item->id ?> = <?php echo $item->chart_data ?>;
-							</script>
+							<div id='spri_chart_list'>
+								<script type='text/javascript'>
+									google.load('visualization', '1', {packages: ['corechart']});
+								</script>
+								<script type='text/javascript' class='chart_data'>
+									var data_<?php echo $item->id ?> = <?php echo $item->chart_data ?>;
+								</script>
 
-							<script type='text/javascript' class='chart_opt'>
-								var option_<?php echo $item->id ?> = <?php echo $item->chart_opt ?>;
-							</script>
+								<script type='text/javascript' class='chart_opt'>
+									var option_<?php echo $item->id ?> = <?php echo $item->chart_opt ?>;
+								</script>
 
-							<script type='text/javascript' class='chart_draw'>
-								jQuery(document).ready(function () {
-									var data;
-									data = google.visualization.arrayToDataTable(data_<?php echo $item->id ?>);
-									var options = option_<?php echo $item->id ?>;
-									google.setOnLoadCallback(drawChart);
-									function drawChart() {
-										chart_canvas_<?php echo $item->id ?> = new google.visualization.<?php echo $item->chart_type ?>(document.getElementById('chart_canvas_<?php echo $item->id ?>'));
-										google.visualization.events.addListener(chart_canvas_<?php echo $item->id ?>, 'onmouseover', uselessHandler2);
-										google.visualization.events.addListener(chart_canvas_<?php echo $item->id ?>, 'onmouseout', uselessHandler3);
-										function uselessHandler2() {
-											jQuery('#chart_canvas_<?php echo $item->id ?>').css('cursor', 'pointer')
+								<script type='text/javascript' class='chart_draw'>
+									jQuery(document).ready(function () {
+										var data;
+										data = google.visualization.arrayToDataTable(data_<?php echo $item->id ?>);
+										var options = option_<?php echo $item->id ?>;
+										google.setOnLoadCallback(drawChart);
+										function drawChart() {
+											chart_canvas_<?php echo $item->id ?> = new google.visualization.<?php echo $item->chart_type ?>(document.getElementById('chart_canvas_<?php echo $item->id ?>'));
+											google.visualization.events.addListener(chart_canvas_<?php echo $item->id ?>, 'onmouseover', uselessHandler2);
+											google.visualization.events.addListener(chart_canvas_<?php echo $item->id ?>, 'onmouseout', uselessHandler3);
+											function uselessHandler2() {
+												jQuery('#chart_canvas_<?php echo $item->id ?>').css('cursor', 'pointer')
+											}
+
+											function uselessHandler3() {
+												jQuery('#chart_canvas_<?php echo $item->id ?>').css('cursor', 'default')
+											}
+
+											chart_canvas_<?php echo $item->id ?>.draw(data, options);
 										}
 
-										function uselessHandler3() {
-											jQuery('#chart_canvas_<?php echo $item->id ?>').css('cursor', 'default')
-										}
-
-										chart_canvas_<?php echo $item->id ?>.draw(data, options);
-									}
-
-									jQuery(window).resize(function () {
-										chart_canvas_<?php echo $item->id ?>.draw(data, options);
+										jQuery(window).resize(function () {
+											chart_canvas_<?php echo $item->id ?>.draw(data, options);
+										});
 									});
-								});
-							</script>
+								</script>
+							</div>
 						</div>
 					</div>
-				</div>
 
 				<?php endforeach ?>
 
@@ -172,13 +194,14 @@ function create_table() {
 
 add_action( 'wp_ajax_spri_ajax_csv_upload', 'spri_ajax_csv_upload' );
 
+// TODO this function assume that file is only euc-kr encoding. may need detecting encoding process.
 function spri_ajax_csv_upload() {
 	$csv = $_FILES['csv_file'];
 	//var_dump( $csv );
 
 	setlocale( LC_CTYPE, 'ko_KR.eucKR' );
 	$fp      = fopen( $csv['tmp_name'], 'r' );
-	$content = array();
+	$raw_data = array();
 
 	while ( $fdata = fgetcsv( $fp ) ) {
 
@@ -187,10 +210,25 @@ function spri_ajax_csv_upload() {
 			$tmp_data[] = iconv( "euc-kr", "UTF-8", $data );
 		}
 
-		$content[] = $tmp_data;
+		$raw_data[] = $tmp_data;
 	}
 
-	echo( json_encode( $content ) );
+	// 2D array transpose
+	array_unshift($raw_data, null);
+	$raw_data = call_user_func_array("array_map", $raw_data);
+
+	// number string to number
+	$result= array();
+	foreach($raw_data as $row){
+		$tmp1 = array_map( "floatVal", array_slice($row,1));
+		array_unshift($tmp1, $row[0]  );
+		$result[] = $tmp1;
+	}
+
+	// set column header
+	$result[0] = $raw_data[0];
+
+	echo( json_encode( $result) );
 
 	wp_die();
 }

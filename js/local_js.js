@@ -51,3 +51,21 @@ function showRes(respond, status, xhr, $form){
     option_editor.getSession().setMode("ace/mode/javascript");
     option_editor.setValue(JSON.stringify(default_option, null, '\t'));
 }
+
+jQuery('#chart_redraw').click(function ($) {
+    event.preventDefault();
+    var options_str = option_editor.getValue();
+    var options_json = JSON.parse(options_str);
+    var data_str = data_editor.getValue();
+    var data_json = JSON.parse(data_str);
+
+    var data_table = google.visualization.arrayToDataTable(data_json);
+
+    var window_google = window['google']['visualization'];
+    var selected_type = jQuery('#chart_type_selector input[name=chart_type]:checked').val();
+
+    new_chart_draw_area = new window_google[selected_type](document.getElementById('new_chart_draw_area'));
+
+
+    new_chart_draw_area.draw(data_table, options_json);
+});
