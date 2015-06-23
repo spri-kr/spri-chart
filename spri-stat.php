@@ -169,26 +169,6 @@ function create_table() {
 	}
 }
 
-add_shortcode( 'spri_chart', 'spri_chart_draw_shortcode' );
-function spri_chart_draw_shortcode( $atts ) {
-	global $wpdb;
-
-	$a   = shortcode_atts( array(
-		'id' => '1',
-	), $atts );
-	$sql = "select idx, saved_key, chart_title, chart_title, csvfile_relative, excelfile_relative, chart_type from wp_spri_chart_list ";
-	$sql .= " WHERE state='A'  AND idx = {$a['id']}";
-	$chart      = $wpdb->get_row(
-		$sql
-	);
-	$saved_key  = $chart->saved_key;
-	$uploaddir  = plugin_dir_path( __FILE__ ) . "/../../uploads/spri-stat/";
-	$chart_file = $uploaddir . $saved_key . ".chart.dat";
-
-	$chart_code = file_get_contents( $chart_file );
-
-	return '<div class="chart">' . html_entity_decode( $chart_code ) . '</div>';
-}
 
 add_action( 'wp_ajax_spri_ajax_csv_upload', 'spri_ajax_csv_upload' );
 
