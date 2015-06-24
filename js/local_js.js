@@ -54,6 +54,7 @@ function showRes(respond, status, xhr, $form) {
     option_editor.setTheme("ace/theme/monokai");
     option_editor.getSession().setMode("ace/mode/javascript");
     option_editor.setValue(JSON.stringify(default_option, null, '\t'));
+    jQuery('#chart_redraw').click();
 }
 
 jQuery('#chart_redraw').click(function ($) {
@@ -97,7 +98,8 @@ jQuery('#new_chart_upload').click(function ($) {
         //dataType:"json",
         //processData: false,
         success: function (data) {
-            alert(data)
+            //alert(data)
+            location.reload();
         }
     }
 

@@ -73,7 +73,7 @@ function spri_chart_admin_page() {
 				</div>
 				<div id="chart_type_selector" class="add_new_chart row form-group upload_data">
 					<label class="radio-inline">
-						<input name="chart_type" type="radio" value="ColumnChart">Column Chart</input>
+						<input checked name="chart_type" type="radio" value="ColumnChart">Column Chart</input>
 					</label>
 					<label class="radio-inline">
 						<input name="chart_type" type="radio" value="BarChart">Bar Chart</input>
@@ -91,6 +91,7 @@ function spri_chart_admin_page() {
 
 				<div class="row add_new_chart">
 					<input id="chart_redraw" value="Draw" type="button" class="btn btn-primary form-control"/>
+					<input id="new_chart_upload" class="btn btn-danger form-control" type="button" value="Upload"/>
 				</div>
 
 				<div class="row add_new_chart">
@@ -113,18 +114,14 @@ function spri_chart_admin_page() {
 						<div id="option_editor" class="editor"></div>
 					</div>
 				</div>
-				<div class="row add_new_chart">
-					<input id="new_chart_upload" class="btn btn-danger form-control" type="button" value="Upload"/>
-				</div>
+
 			</div>
 			<div class="graph_list row">
 				<?php foreach ( get_all_graph() as $item ): ?>
 					<div id='<?php echo $item->chart_id ?>' class="graph col-xs-6">
-						<?php //print_r($item) ?>
 						<div class="row">
-
-							<div class="col-xs-6"><?php echo $item->chart_title ?></div>
-							<div class="col-xs-offset-6"></div>
+							<h4 class="col-xs-1"><?php echo $item->chart_id ?></h4>
+							<h4 class="col-xs-10"><?php echo $item->chart_title ?></h4>
 							<div id='chart_canvas_<?php echo $item->chart_id ?>'
 							     class='chart_draw col-lg-12'></div>
 
@@ -295,7 +292,7 @@ function get_all_graph() {
 
 	return $wpdb->get_results( "
 		select * from $table_name
-		where chart_status = 'P';
+		where chart_status = 'P' order by chart_id desc;
 	" );
 
 }
