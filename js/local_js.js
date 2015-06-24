@@ -101,7 +101,7 @@ jQuery('#new_chart_upload').click(function ($) {
             //alert(data)
             location.reload();
         }
-    }
+    };
 
     console.log(sending_pkg);
     console.log(ajax_option);
@@ -109,5 +109,10 @@ jQuery('#new_chart_upload').click(function ($) {
 });
 
 jQuery(window).resize(function () {
-    new_chart_draw_area.draw(data_table, options_json);
+    jQuery('#chart_redraw').click();
+});
+
+jQuery('#chart_type_selector input[name=chart_type]').change(function () {
+    jQuery('#chart_redraw').click();
+
 });
