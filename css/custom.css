@@ -7,5 +7,10 @@
 }
 
 .editor {
-    height: 400px;
+    height: 300px;
+
+}
+
+.add_new_chart{
+    margin-top: 10px;
 }
