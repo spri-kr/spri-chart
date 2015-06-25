@@ -15,18 +15,18 @@ add_action( 'wp_head', 'include_scripts' );
 function include_scripts() {
 	echo '   <script type="text/javascript" src="https://www.google.com/jsapi"></script>';
 	wp_enqueue_script( 'spri-local-js',
-		plugins_url( '/js/local_js.js', __FILE__ ), array( 'jquery' ) );
+		plugins_url( '/src/js/local_js.js', __FILE__ ), array( 'jquery' ) );
 
 	wp_enqueue_script( 'ajax_form_plugin',
-		plugins_url( '/js/jquery.form.js', __FILE__ ), array( 'jquery' ) );
+		plugins_url( '/src/js/jquery.form.js', __FILE__ ), array( 'jquery' ) );
 
 	wp_enqueue_script( 'ace_editor',
-		plugins_url( '/ace/src-noconflict/ace.js', __FILE__ ), array(
+		plugins_url( '/src/ace/src-noconflict/ace.js', __FILE__ ), array(
 			'jquery',
 		) );
 
 	wp_enqueue_style( 'spri-chart-css',
-		plugins_url( 'css/custom.css', __FILE__ ) );
+		plugins_url( '/src/css/custom.css', __FILE__ ) );
 
 //	Bootstrap
 	wp_enqueue_style( 'bootstrap-css',
