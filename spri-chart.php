@@ -327,6 +327,7 @@ function spri_chart_create_table() {
 				PRIMARY KEY (id),
 				index (chart_id),
 				index (chart_status)
+				index (chart_id, chart_status)
 				) $charset_collate;
 				";
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -517,7 +518,7 @@ function spri_chart_shortcode( $attr ) {
 		$id         = $attr['id'];
 
 		$item = $wpdb->get_row( "
-		select * from $table_name where chart_id = $id order by chart_rev desc limit 1;
+		select * from $table_name where chart_id = $id and chart_status = 'P' order by chart_rev desc limit 1;
 		" );
 
 		$r = <<<RESULT_TEXT
