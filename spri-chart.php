@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: SPRI Chart
-Plugin URI: http://spri.krt
-Description: 통계 차트생성 플러그인
+Plugin Name: SPRI Chart Manager
+Plugin URI: http://spri.kr
+Description: Chart plugin for wordpress using google jsapi chart
 Author: ungsik.yun@gmail.com, binggle@live.co.kr
-Version: 1.0
-Author URI: http://spri.krt
+Version: 1.1
+Author URI: http://spri.kr
 */
 
 add_action( 'admin_menu', 'spri_chart_admin_menu' );
