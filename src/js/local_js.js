@@ -11,16 +11,19 @@ jQuery(document).ready(function ($) {
 
 
             window['data_editor_' + id] = ace.edit("chart_" + id + "_data_editor");
-            window['data_editor_' + id].$blockScrolling = Infinity;
+            //window['data_editor_' + id].$blockScrolling = Infinity;
             window['data_editor_' + id].setTheme("ace/theme/monokai");
             window['data_editor_' + id].getSession().setMode("ace/mode/javascript");
             window['data_editor_' + id].setValue(JSON.stringify(window['data_' + id], null, '\t'));
+            window['data_editor_' + id].clearSelection();
+
 
             window['option_editor_' + id] = ace.edit("chart_" + id + "_option_editor");
-            window['option_editor_' + id].$blockScrolling = Infinity;
+            //window['option_editor_' + id].$blockScrolling = Infinity;
             window['option_editor_' + id].setTheme("ace/theme/monokai");
             window['option_editor_' + id].getSession().setMode("ace/mode/javascript");
             window['option_editor_' + id].setValue(JSON.stringify(window['option_' + id], null, '\t'));
+            window['option_editor_' + id].clearSelection();
 
             var title = jQuery("#chart_" + id + "_title").text();
             jQuery("#chart_" + id + "_title_editor").val(title);
@@ -56,7 +59,7 @@ jQuery(document).ready(function ($) {
             option: option_srt,
             title: title,
             type: chart_type,
-            chart_id : id
+            chart_id: id
         }
 
         var ajax_option = {
@@ -68,14 +71,35 @@ jQuery(document).ready(function ($) {
             },
             success: function (data) {
                 location.reload();
-                //alert(data)
             }
         };
-
-        //console.log(sending_pkg);
-        //console.log(ajax_option);
         jQuery.ajax("/wp-admin/admin-ajax.php", ajax_option);
     });
+
+    jQuery(".chart_delete_btn").click(function () {
+        var r = confirm("정말 삭제하시겠습니까?");
+
+        if (r === true) {
+            var row_id = jQuery(this).attr("row_id");
+            var sending_pkg = {
+                row_id: row_id
+            }
+
+            var ajax_option = {
+                method: "POST",
+                data: {
+                    action: 'spri_ajax_chart_delete',
+                    pkg: sending_pkg
+
+                },
+                success: function (data) {
+                    location.reload();
+                }
+            };
+            jQuery.ajax("/wp-admin/admin-ajax.php", ajax_option);
+        }
+    });
+
 
     var options = {
         data: {
@@ -84,6 +108,7 @@ jQuery(document).ready(function ($) {
         success: showRes
     }
     jQuery("#csv_file_upload").ajaxForm(options);
+
 
     // chart default option
     default_option = {

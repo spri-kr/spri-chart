@@ -203,7 +203,8 @@ function spri_chart_draw_admin() {
 							<div class="col-xs-6">
 								<button id="delete_<?php echo $item->chart_id ?>"
 								        class="btn btn-danger btn-block chart_delete_btn"
-								        type="button" chart_id="<?php echo $item->chart_id ?>">Delete
+								        type="button" chart_id="<?php echo $item->chart_id ?>"
+										row_id="<?php echo $item->id ?>">Delete
 								</button>
 							</div>
 						</div>
@@ -423,7 +424,6 @@ function spri_ajax_db_insert() {
 
 
 add_action( 'wp_ajax_spri_ajax_chart_update', 'spri_ajax_chart_update' );
-
 function spri_ajax_chart_update() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "spri_chart";
@@ -460,6 +460,24 @@ function spri_ajax_chart_update() {
 	) );
 
 	wp_die();
+}
+
+add_action( 'wp_ajax_spri_ajax_chart_delete', 'spri_ajax_chart_delete' );
+function spri_ajax_chart_delete(){
+	global $wpdb;
+	$table_name = $wpdb->prefix . "spri_chart";
+	$data       = $_POST["pkg"];
+
+	$update_data = array(
+		"chart_status" => "D"
+	);
+
+	$wpdb->update( $table_name, $update_data,
+		array("id"=>$data['row_id']),
+		array(	'%s') );
+
+	wp_die();
+
 }
 
 function spri_chart_get_all_graph() {
