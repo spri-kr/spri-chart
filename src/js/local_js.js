@@ -52,7 +52,7 @@ jQuery(document).ready(function ($) {
         var data_str = window['data_editor_' + id].getValue();
         var option_srt = window['option_editor_' + id].getValue();
         var chart_type = jQuery("#chart_" + id + "_type_selector_editor input[name=chart_" + id + "_type]:checked").val()
-        var title = jQuery("#chart_" + id + "_title").text();
+        var title = jQuery("#chart_" + id + "_title_editor").text();
 
         var sending_pkg = {
             data: data_str,
