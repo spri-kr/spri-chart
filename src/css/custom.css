@@ -13,10 +13,15 @@
 
 .add_new_chart{
     margin-top: 10px;
+    display: none;
 }
 
-.graph {
+.chart {
     padding: 10px;
     background: #ddd;
     background-clip: content-box;
+}
+
+.chart_edit_area {
+    display: none;
 }
