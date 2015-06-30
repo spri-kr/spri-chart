@@ -193,14 +193,14 @@ function spri_chart_draw_admin() {
 
 						<div class="row chart_editor_area"></div>
 						<div class="row chart_control_buttons">
-							<div class="col-xs-4">
+							<div class="col-xs-6">
 								<button id="edit_<?php echo $item->chart_id ?>"
 								        class="btn btn-primary btn-block chart_edit_btn"
 								        type="button" chart_id="<?php echo $item->chart_id ?>">Edit
 								</button>
 							</div>
 
-							<div class="col-xs-4">
+							<div class="col-xs-6">
 								<button id="delete_<?php echo $item->chart_id ?>"
 								        class="btn btn-danger btn-block chart_delete_btn"
 								        type="button" chart_id="<?php echo $item->chart_id ?>">Delete
@@ -221,14 +221,22 @@ function spri_chart_draw_admin() {
 										</div>
 
 										<div class="col-xs-6">
-											<button id="" class="btn btn-primary chart_edit_draw_btn" chart_id="<?php echo $item->chart_id ?>">
-												Draw
-											</button>
+											<div class="row">
+												<div class="col-xs-6">
+													<button id="" class="btn btn-primary btn-block chart_edit_draw_btn"
+													        chart_id="<?php echo $item->chart_id ?>">
+														Draw
+													</button>
 
-											<button id="update_<?php echo $item->chart_id ?>"
-											        class="btn btn-success chart_update_btn"
-											        type="button" chart_id="<?php echo $item->chart_id ?>">Update
-											</button>
+												</div>
+												<div class="col-xs-6">
+													<button id="update_<?php echo $item->chart_id ?>"
+													        class="btn btn-success btn-block chart_update_btn"
+													        type="button" chart_id="<?php echo $item->chart_id ?>">
+														Update
+													</button>
+												</div>
+											</div>
 
 										</div>
 									</div>
@@ -238,20 +246,25 @@ function spri_chart_draw_admin() {
 									<div id="chart_<?php echo $item->chart_id ?>_type_selector_editor"
 									     class="col-xs-12 form-group">
 										<label class="radio-inline">
-											<input checked name="chart_type" type="radio" value="ColumnChart">Column
+											<input name="chart_<?php echo $item->chart_id ?>_type" type="radio"
+											       value="ColumnChart">Column
 											Chart</input>
 										</label>
 										<label class="radio-inline">
-											<input name="chart_type" type="radio" value="BarChart">Bar Chart</input>
+											<input name="chart_<?php echo $item->chart_id ?>_type" type="radio"
+											       value="BarChart">Bar Chart</input>
 										</label>
 										<label class="radio-inline">
-											<input name="chart_type" type="radio" value="PieChart">Pie Chart</input>
+											<input name="chart_<?php echo $item->chart_id ?>_type" type="radio"
+											       value="PieChart">Pie Chart</input>
 										</label>
 										<label class="radio-inline">
-											<input name="chart_type" type="radio" value="LineChart">Line Chart</input>
+											<input name="chart_<?php echo $item->chart_id ?>_type" type="radio"
+											       value="LineChart">Line Chart</input>
 										</label>
 										<label class="radio-inline">
-											<input name="chart_type" type="radio" value="ComboChart">Combo Chart</input>
+											<input name="chart_<?php echo $item->chart_id ?>_type" type="radio"
+											       value="ComboChart">Combo Chart</input>
 										</label>
 									</div>
 								</div>
@@ -311,7 +324,8 @@ function spri_chart_create_table() {
 				chart_rev INT(11) NOT NULL,
 				chart_status VARCHAR(10) NOT NULL,
 				PRIMARY KEY (id),
-				index(chart_id)
+				index (chart_id),
+				index (chart_status)
 				) $charset_collate;
 				";
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -373,7 +387,7 @@ function spri_ajax_db_insert() {
 	$data       = $_POST["pkg"];
 
 	$chart_lastest_id = $wpdb->get_var( "
-	SELECT chart_id from $table_name ORDER BY chart_id DESC
+	SELECT max(chart_id) from $table_name
 	" );
 	if ( $chart_lastest_id == null ) {
 		$chart_lastest_id = 0;
@@ -407,13 +421,62 @@ function spri_ajax_db_insert() {
 
 }
 
+
+add_action( 'wp_ajax_spri_ajax_chart_update', 'spri_ajax_chart_update' );
+
+function spri_ajax_chart_update() {
+	global $wpdb;
+	$table_name = $wpdb->prefix . "spri_chart";
+	$data       = $_POST["pkg"];
+	$chart_id   = $data['chart_id'];
+
+	$prev_chart_rev = $wpdb->get_row( "
+	SELECT chart_rev from $table_name WHERE chart_id = $chart_id
+	ORDER by chart_rev desc limit 1;
+	" )->chart_rev;
+
+	$insert_data = array(
+		"chart_id"     => $data['chart_id'],
+		"chart_title"  => $data['title'],
+		"chart_data"   => stripslashes( $data['data'] ),
+		"chart_option" => stripslashes( $data['option'] ),
+		"chart_type"   => $data['type'],
+		"chart_rev"    => $prev_chart_rev + 1,
+		"chart_status" => "P"
+
+	);
+
+	print_r( $prev_chart_rev );
+	//print_r( $insert_data );
+
+	$wpdb->insert( $table_name, $insert_data, array(
+		'%d',
+		'%s',
+		'%s',
+		'%s',
+		'%s',
+		'%d',
+		'%s',
+	) );
+
+	wp_die();
+}
+
 function spri_chart_get_all_graph() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . "spri_chart";
 
 	return $wpdb->get_results( "
-		select * from $table_name
-		where chart_status = 'P' order by chart_id desc;
+		select t1.* from $table_name as t1
+  INNER JOIN
+  (
+    SELECT chart_id, max(chart_rev) as max_rev
+    from $table_name
+    GROUP BY chart_id
+    ) as t2
+  on t1.chart_id = t2.chart_id
+  and t1.chart_rev = t2.max_rev
+where chart_status = 'P' order by chart_id desc ;
 	" );
 
 }
@@ -441,6 +504,7 @@ function spri_chart_shortcode( $attr ) {
 
 		$r = <<<RESULT_TEXT
 <div>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type='text/javascript'>
     google.load('visualization', '1', {
         packages: ['corechart']

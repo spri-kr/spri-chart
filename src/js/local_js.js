@@ -7,27 +7,75 @@ jQuery(document).ready(function ($) {
     jQuery('.chart_edit_btn').click(
         function () {
             var id = jQuery(this).attr("chart_id");
-            jQuery("#chart_edit_area_"+id).toggle();
+            jQuery("#chart_edit_area_" + id).toggle();
 
 
-            var data_editor = ace.edit("chart_"+id+"_data_editor");
-            data_editor.$blockScrolling = Infinity;
-            data_editor.setTheme("ace/theme/monokai");
-            data_editor.getSession().setMode("ace/mode/javascript");
-            data_editor.setValue(JSON.stringify(window['data_'+id], null, '\t'));
+            window['data_editor_' + id] = ace.edit("chart_" + id + "_data_editor");
+            window['data_editor_' + id].$blockScrolling = Infinity;
+            window['data_editor_' + id].setTheme("ace/theme/monokai");
+            window['data_editor_' + id].getSession().setMode("ace/mode/javascript");
+            window['data_editor_' + id].setValue(JSON.stringify(window['data_' + id], null, '\t'));
 
-            var option_editor = ace.edit("chart_"+id+"_option_editor");
-            option_editor.$blockScrolling = Infinity;
-            option_editor.setTheme("ace/theme/monokai");
-            option_editor.getSession().setMode("ace/mode/javascript");
-            option_editor.setValue(JSON.stringify(window['option_'+id], null, '\t'));
+            window['option_editor_' + id] = ace.edit("chart_" + id + "_option_editor");
+            window['option_editor_' + id].$blockScrolling = Infinity;
+            window['option_editor_' + id].setTheme("ace/theme/monokai");
+            window['option_editor_' + id].getSession().setMode("ace/mode/javascript");
+            window['option_editor_' + id].setValue(JSON.stringify(window['option_' + id], null, '\t'));
 
-            var title = jQuery("#chart_"+id+"_title").text();
-            jQuery("#chart_"+id+"_title_editor").val(title);
+            var title = jQuery("#chart_" + id + "_title").text();
+            jQuery("#chart_" + id + "_title_editor").val(title);
 
-            jQuery("#chart_"+id+"_type_selector_editor input[value="+window['type_'+id]).prop("checked",true)
+            jQuery("#chart_" + id + "_type_selector_editor input[value=" + window['type_' + id]).prop("checked", true)
 
         });
+
+    jQuery(".chart_edit_draw_btn").click(function () {
+        var id = jQuery(this).attr("chart_id");
+        var data_srt = window['data_editor_' + id].getValue();
+        var option_srt = window['option_editor_' + id].getValue();
+        var chart_type = jQuery("#chart_" + id + "_type_selector_editor input[name=chart_" + id + "_type]:checked").val()
+
+        var data = google.visualization.arrayToDataTable(JSON.parse(data_srt));
+        var option = JSON.parse(option_srt);
+
+        var chart = new google.visualization[chart_type](document.getElementById('chart_canvas_' + id));
+
+        chart.draw(data, option);
+
+    });
+
+    jQuery(".chart_update_btn").click(function () {
+        var id = jQuery(this).attr("chart_id");
+        var data_str = window['data_editor_' + id].getValue();
+        var option_srt = window['option_editor_' + id].getValue();
+        var chart_type = jQuery("#chart_" + id + "_type_selector_editor input[name=chart_" + id + "_type]:checked").val()
+        var title = jQuery("#chart_" + id + "_title").text();
+
+        var sending_pkg = {
+            data: data_str,
+            option: option_srt,
+            title: title,
+            type: chart_type,
+            chart_id : id
+        }
+
+        var ajax_option = {
+            method: "POST",
+            data: {
+                action: 'spri_ajax_chart_update',
+                pkg: sending_pkg
+
+            },
+            success: function (data) {
+                location.reload();
+                //alert(data)
+            }
+        };
+
+        //console.log(sending_pkg);
+        //console.log(ajax_option);
+        jQuery.ajax("/wp-admin/admin-ajax.php", ajax_option);
+    });
 
     var options = {
         data: {
@@ -58,15 +106,11 @@ jQuery(document).ready(function ($) {
         var options_str = option_editor.getValue();
         options_json = JSON.parse(options_str);
         var data_str = data_editor.getValue();
-        var data_json = JSON.parse(data_str);
+        data_table = google.visualization.arrayToDataTable(JSON.parse(data_str));
 
-        data_table = google.visualization.arrayToDataTable(data_json);
-
-        var window_google = window['google']['visualization'];
         var selected_type = jQuery('#chart_type_selector input[name=chart_type]:checked').val();
 
-        new_chart_draw_area = new window_google[selected_type](document.getElementById('new_chart_draw_area'));
-
+        new_chart_draw_area = new google.visualization[selected_type](document.getElementById('new_chart_draw_area'));
 
         new_chart_draw_area.draw(data_table, options_json);
     });
@@ -108,8 +152,8 @@ jQuery(document).ready(function ($) {
             }
         };
 
-        console.log(sending_pkg);
-        console.log(ajax_option);
+        //console.log(sending_pkg);
+        //console.log(ajax_option);
         jQuery.ajax("/wp-admin/admin-ajax.php", ajax_option);
     });
 
