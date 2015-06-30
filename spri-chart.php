@@ -327,6 +327,7 @@ function spri_chart_create_table() {
 				PRIMARY KEY (id),
 				index (chart_id),
 				index (chart_status)
+				index (chart_id, chart_status)
 				) $charset_collate;
 				";
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -500,6 +501,7 @@ where chart_status = 'P' order by chart_id desc ;
 }
 
 //add_shortcode("spri_chart", "chart_shortcode");
+add_shortcode( "nsc", "spri_chart_shortcode" );
 add_shortcode( "new_spri_chart", "spri_chart_shortcode" );
 function spri_chart_shortcode( $attr ) {
 
@@ -517,7 +519,9 @@ function spri_chart_shortcode( $attr ) {
 		$id         = $attr['id'];
 
 		$item = $wpdb->get_row( "
-		select * from $table_name where chart_id = $id order by chart_rev desc limit 1;
+		select * from $table_name where chart_id = $id and chart_status = 'P' and chart_rev = (
+  select max(chart_rev) from $table_name where chart_id = $id
+) order by chart_rev desc limit 1
 		" );
 
 		$r = <<<RESULT_TEXT
