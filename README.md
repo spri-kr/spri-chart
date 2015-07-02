@@ -13,23 +13,23 @@ Done! That's it!
 ## How to use
 
 ### Upload chart
-![Admin menu](/img/1.jpg)
+![Admin menu](/img/1.jpg?raw=true)
 
 Navigate admin menu. click the plugin menu.
  
-![plugin page](/img/2.jpg)
+![plugin page](/img/2.jpg?raw=true)
 
-![csv file upload](/img/3.jpg)
+![csv file upload](/img/3.jpg?raw=true)
 
 Click `Add new chart` then upload your csv file.
 
-![csv file upload](/img/4.jpg)
+![csv file upload](/img/4.jpg?raw=true)
 
 Click `Submit`(`제출` in screenshot. depends on your language) then you can see your chart, chart data and option. you can modify your data and options here. Also chart type can be changed here.
 
 After modification, you can click `Upload`.
 
-![chart drawn](/img/5.jpg)
+![chart drawn](/img/5.jpg?raw=true)
 
 And then, here is your chart ready to insert.
 
