@@ -81,9 +81,9 @@ Edit Done!
 
 Simply click `Delete`. Dialog will appear. If you click `OK` then chart will be deleted.
 
-## Contributors
+## Contribution
 
-Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
+If you want to contribute to this project, just simply sending a pull request or submit a issue.
 
 ## License
 
