@@ -33,8 +33,23 @@ After modification, you can click `Upload`.
 
 And then, here is your chart ready to insert.
 
-
 ### Insert into post
+
+![chart drawn](img/5.JPG?raw=true)
+
+At top of single chart, you can see number and chart title you typed. the number is id of chart. you can insert your chart into post by shortcode
+
+```
+[nsc id=1234]
+```
+
+![chart in post](img/10.JPG?raw=true)
+
+like this. `nsc` stand for `new spri chart`. I will change them near future or add an option to change shortcode to user string.
+
+![chart in post](img/11.JPG?raw=true)
+
+after publish post, you can see your chart on post. At now, insert same chart multiple time does not possible.
 
 ### Edit chart
 
