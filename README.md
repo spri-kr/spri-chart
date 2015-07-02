@@ -53,6 +53,28 @@ after publish post, you can see your chart on post. At now, insert same chart mu
 
 ### Edit chart
 
+You can edit chart even after upload.
+
+![chart](img/5.JPG?raw=true)
+
+On the plugin page, you can see `Edit` button on every single chart. Click that button.
+
+![chart editor](img/6.JPG?raw=true)
+
+This is chart edit screen . You can edit your chart from here.
+
+Modify your chart freely.
+
+![chart editor](img/7.JPG?raw=true)
+
+![chart editor](img/8.JPG?raw=true)
+
+`Draw` will redraw your chart with modified data and option. After modification, You can click `Update`. 
+
+![chart editor](img/9.JPG?raw=true)
+
+Edit Done!
+
 ## Contributors
 
 Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
