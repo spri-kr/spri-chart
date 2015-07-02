@@ -75,6 +75,12 @@ Modify your chart freely.
 
 Edit Done!
 
+### Delete chart
+
+![chart editor](img/9.JPG?raw=true)
+
+Simply click `Delete`. Dialog will appear. If you click `OK` then chart will be deleted.
+
 ## Contributors
 
 Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
