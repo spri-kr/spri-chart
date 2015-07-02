@@ -87,4 +87,3 @@ If you want to contribute to this project, just simply sending a pull request or
 
 ## License
 
-A short snippet describing the license (MIT, Apache, etc.)
