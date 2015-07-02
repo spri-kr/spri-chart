@@ -45,7 +45,7 @@ At top of single chart, you can see number and chart title you typed. the number
 
 ![chart in post](img/10.JPG?raw=true)
 
-like this. `nsc` stand for `new spri chart`. I will change them near future or add an option to change shortcode to user string.
+like this. `nsc` stand for `new spri chart`. It will be changed to another string or changed by option to user string in near future.
 
 ![chart in post](img/11.JPG?raw=true)
 
