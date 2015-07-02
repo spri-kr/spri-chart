@@ -49,7 +49,7 @@ like this. `nsc` stand for `new spri chart`. I will change them near future or a
 
 ![chart in post](img/11.JPG?raw=true)
 
-after publish post, you can see your chart on post. At now, insert same chart multiple time does not possible.
+after publish post, you can see your chart on post. At now, insert same chart multiple times does not supported.
 
 ### Edit chart
 
