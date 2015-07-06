@@ -214,8 +214,7 @@ function showRes(respond, status, xhr, $form) {
     jQuery('#chart_redraw').click();
 }
 
-
-
-
-
-
+function transpose(a)
+{
+    return a[0].map(function (_, c) { return a.map(function (r) { return r[c]; }); });
+}
