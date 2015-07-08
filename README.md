@@ -201,6 +201,80 @@ Please visit reference URL for how configure axes options.
 ### Data
 https://developers.google.com/chart/interactive/docs/roles#what-are-roles
 
+You can customize every single data.
+
+You can change:
+
+- annotation
+- annotationText
+- certainty
+- emphasis
+- interval
+- scope
+- style
+- tooltip
+
+You can set data role like this:
+```javascript
+var data = google.visualization.arrayToDataTable([
+       ['Employee Name', 'Salary'],
+       ['Mike', {v:22500, f:'22,500'}], // Format as "22,500".
+       ['Bob', 35000],
+       ['Alice', 44000],
+       ['Frank', 27000],
+       ['Floyd', 92000],
+       ['Fritz', 18500]
+      ],
+      false); // 'false' means that the first row contains labels, not data.
+      
+var data = google.visualization.arrayToDataTable([
+       [ {label: 'Year', id: 'year'},
+         {label: 'Sales', id: 'Sales', type: 'number'}, // Use object notation to explicitly specify the data type.
+         {label: 'Expenses', id: 'Expenses', type: 'number'} ],
+       ['2014', 1000, 400],
+       ['2015', 1170, 460],
+       ['2016', 660, 1120],
+       ['2017', 1030, 540]]);
+       
+
+var data = google.visualization.arrayToDataTable([
+	[
+		"구분",
+		"시장규모",
+		{
+			"role": "style"
+		}
+	],
+	[
+		"평판TV",
+		986,
+		"opacity: 1; color:#000;"
+	],
+	[
+		"LCD패널",
+		751,
+		"#FF9900"
+	],
+	[
+		"휴대폰",
+		3988,
+		"#FF9900"
+	],
+	[
+		"반도체",
+		3545,
+		"#FF9900"
+	],
+	[
+		"SW",
+		10671,
+		"#DC3912"
+	]
+]
+```
+
+for detailed option examples are on the reference URL.
+
 ## Contribution
 
 If you want to contribute to this project, just simply sending a pull request or submit a issue.
