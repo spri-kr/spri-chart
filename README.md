@@ -81,6 +81,25 @@ Edit Done!
 
 Simply click `Delete`. Dialog will appear. If you click `OK` then chart will be deleted.
 
+## Customizing
+
+You can customizing chart. Here is examples and reference URLs for customizing. 
+
+### Chart
+https://developers.google.com/chart/interactive/docs/customizing_charts
+
+### Points
+https://developers.google.com/chart/interactive/docs/points
+
+### Lines
+https://developers.google.com/chart/interactive/docs/lines
+
+### Axes
+https://developers.google.com/chart/interactive/docs/customizing_axes
+
+### Data
+https://developers.google.com/chart/interactive/docs/roles#what-are-roles
+
 ## Contribution
 
 If you want to contribute to this project, just simply sending a pull request or submit a issue.
