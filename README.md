@@ -90,6 +90,52 @@ You can customizing chart. Here is some reference URLs for customizing. Example 
 ### Lines
 https://developers.google.com/chart/interactive/docs/lines
 
+Chart has line can be customized.
+
+```javascript
+var options = {
+  legend: 'none',
+  hAxis: { maxValue: 7 },
+  vAxis: { maxValue: 13 },
+  series: {
+    0: { lineWidth: 1 },
+    1: { lineWidth: 2 },
+    2: { lineWidth: 4 },
+    3: { lineWidth: 8 },
+    4: { lineWidth: 16 },
+    5: { lineWidth: 24 }
+  },
+  colors: ['#e2431e', '#d3362d', '#e7711b',
+           '#e49307', '#e49307', '#b9c246']
+};
+
+var options = {
+  hAxis: { maxValue: 10 },
+  vAxis: { maxValue: 18 },
+  chartArea: { width: 380 },
+  lineWidth: 4,
+  series: {
+    0: { lineDashStyle: [1, 1] },
+    1: { lineDashStyle: [2, 2] },
+    2: { lineDashStyle: [4, 4] },
+    3: { lineDashStyle: [5, 1, 3] },
+    4: { lineDashStyle: [4, 1] },
+    5: { lineDashStyle: [10, 2] },
+    6: { lineDashStyle: [14, 2, 7, 2] },
+    7: { lineDashStyle: [14, 2, 2, 7] },
+    8: { lineDashStyle: [2, 2, 20, 2, 20, 2] }
+  },
+  colors: ['#e2431e', '#f1ca3a', '#6f9654', '#1c91c0',
+           '#4374e0', '#5c3292', '#572a1a', '#999999', '#1a1a1a'],
+};
+
+```
+
+You can change:
+- Color
+- Thickness
+- Dashed or solid line
+
 ### Points
 https://developers.google.com/chart/interactive/docs/points
 
