@@ -92,6 +92,14 @@ https://developers.google.com/chart/interactive/docs/lines
 
 Chart has line can be customized.
 
+You can change:
+
+- Color
+- Thickness
+- Dashed or solid line
+
+Here is example code. more examples are on reference URL.
+
 ```javascript
 var options = {
   legend: 'none',
@@ -131,15 +139,26 @@ var options = {
 
 ```
 
-You can change:
-- Color
-- Thickness
-- Dashed or solid line
+
 
 ### Points
 https://developers.google.com/chart/interactive/docs/points
 
 In line chart you can customizing point on line as you want in several shapes. 
+
+You can change:
+
+- fill-color (Specified as a hex string.)
+- shape-dent
+- shape-rotation
+- shape-sides
+- shape-type
+- stroke-color (Specified as a hex string.)
+- stroke-width (Specified as a hex string.)
+- size
+- visible (Whether the point is visible or not.)
+
+Here is example code. more examples are on reference URL.
 
 ```javascript
 var options = {
@@ -164,23 +183,20 @@ var options = {
 };
 ```
 
-Here is example code. more examples are on reference URL.
-
-- fill-color (Specified as a hex string.)
-- shape-dent
-- shape-rotation
-- shape-sides
-- shape-type
-- stroke-color (Specified as a hex string.)
-- stroke-width (Specified as a hex string.)
-- size
-- visible (Whether the point is visible or not.)
-
-This list is available options for point.
-
-
 ### Axes
 https://developers.google.com/chart/interactive/docs/customizing_axes
+
+Chart has axes like Area Chart, Bar Chart, Candlestick Chart, Column Chart, Combo Chart, Line Chart, Stepped Area Chart and Scatter Chart can be customized
+
+You can change:
+
+- Discrete vs Continuous
+- Direction
+- Label positioning and style
+- Axis title text and style
+- complete list of axis configuration options on the hAxis and vAxis options in the documentation of specific chart.
+
+Please visit reference URL for how configure axes options.
 
 ### Data
 https://developers.google.com/chart/interactive/docs/roles#what-are-roles
