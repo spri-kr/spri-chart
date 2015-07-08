@@ -81,18 +81,57 @@ Edit Done!
 
 Simply click `Delete`. Dialog will appear. If you click `OK` then chart will be deleted.
 
-## Customizing
-
-You can customizing chart. Here is examples and reference URLs for customizing. 
-
-### Chart
+## Customizing Chart
 https://developers.google.com/chart/interactive/docs/customizing_charts
+
+You can customizing chart. Here is some reference URLs for customizing. Example codes on this sections is just a snippet. If you want full information about customizing, please visit the reference URL.
+
+
+### Lines
+https://developers.google.com/chart/interactive/docs/lines
 
 ### Points
 https://developers.google.com/chart/interactive/docs/points
 
-### Lines
-https://developers.google.com/chart/interactive/docs/lines
+In line chart you can customizing point on line as you want in several shapes. 
+
+```javascript
+var options = {
+  legend: 'none',
+  hAxis: { minValue: 0, maxValue: 7 },
+  pointSize: 30,
+  series: {
+        0: { pointShape: 'circle' },
+        1: { pointShape: 'triangle' },
+        2: { pointShape: 'square' },
+        3: { pointShape: 'diamond' },
+        4: { pointShape: 'star' },
+        5: { pointShape: 'polygon' }
+    }
+};
+
+var options = {
+  legend: 'none',
+  colors: ['#15A0C8'],
+  pointSize: 30,
+  pointShape: { type: 'triangle', rotation: 180 }
+};
+```
+
+Here is example code. more examples are on reference URL.
+
+- fill-color (Specified as a hex string.)
+- shape-dent
+- shape-rotation
+- shape-sides
+- shape-type
+- stroke-color (Specified as a hex string.)
+- stroke-width (Specified as a hex string.)
+- size
+- visible (Whether the point is visible or not.)
+
+This list is available options for point.
+
 
 ### Axes
 https://developers.google.com/chart/interactive/docs/customizing_axes
