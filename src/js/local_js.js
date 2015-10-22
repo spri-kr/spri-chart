@@ -4,6 +4,7 @@ jQuery(document).ready(function ($) {
             jQuery(".add_new_chart").toggle();
         });
 
+    // show chart editor area
     jQuery('.chart_edit_btn').click(
         function () {
             var id = jQuery(this).attr("chart_id");
@@ -32,6 +33,7 @@ jQuery(document).ready(function ($) {
 
         });
 
+    // Draw chart based on data area
     jQuery(".chart_edit_draw_btn").click(function () {
         var id = jQuery(this).attr("chart_id");
         var data_srt = window['data_editor_' + id].getValue();
@@ -47,6 +49,8 @@ jQuery(document).ready(function ($) {
 
     });
 
+    // send chart data and option to server via ajax.
+    // Server will update that chart with data and option
     jQuery(".chart_update_btn").click(function () {
         var id = jQuery(this).attr("chart_id");
         var data_str = window['data_editor_' + id].getValue();
@@ -76,6 +80,10 @@ jQuery(document).ready(function ($) {
         jQuery.ajax("/wp-admin/admin-ajax.php", ajax_option);
     });
 
+     /*
+     * Delete chart.
+     * sending ajax request to server.
+     * */
     jQuery(".chart_delete_btn").click(function () {
         var r = confirm("정말 삭제하시겠습니까?");
 
@@ -107,8 +115,8 @@ jQuery(document).ready(function ($) {
         },
         success: showRes
     }
-    jQuery("#csv_file_upload").ajaxForm(options);
 
+    jQuery("#csv_file_upload").ajaxForm(options);
 
     // chart default option
     default_option = {
@@ -126,6 +134,9 @@ jQuery(document).ready(function ($) {
         }
     };
 
+    /*
+    * Do chart redraw with data area
+    * */
     jQuery('#chart_redraw').click(function (event) {
         event.preventDefault();
         var options_str = option_editor.getValue();
@@ -149,6 +160,9 @@ jQuery(document).ready(function ($) {
 
     });
 
+    /*
+    * upload chart data and option via ajax
+    * */
     jQuery('#new_chart_upload').click(function ($) {
         event.preventDefault();
         var upload_options_str = option_editor.getValue();
@@ -182,6 +196,9 @@ jQuery(document).ready(function ($) {
         jQuery.ajax("/wp-admin/admin-ajax.php", ajax_option);
     });
 
+    /*
+    * Do thing. I have no idea why this is here...
+    * */
     jQuery(".chart_edit_btn").click(function () {
         var c_id = jQuery(this).attr("chart_id");
         jQuery(this).parents(".chart_control_buttons").after(
@@ -191,6 +208,9 @@ jQuery(document).ready(function ($) {
     });
 });
 
+/*
+* callbakc function after upload
+* */
 function showRes(respond, status, xhr, $form) {
 
     parsed_respond = JSON.parse(respond);
@@ -214,7 +234,13 @@ function showRes(respond, status, xhr, $form) {
     jQuery('#chart_redraw').click();
 }
 
-function transpose(a)
-{
-    return a[0].map(function (_, c) { return a.map(function (r) { return r[c]; }); });
+
+// Just in case.
+// currently it does not uesd antwhere
+function transpose(a) {
+    return a[0].map(function (_, c) {
+        return a.map(function (r) {
+            return r[c];
+        });
+    });
 }
