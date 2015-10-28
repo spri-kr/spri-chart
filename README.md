@@ -273,6 +273,15 @@ var data = google.visualization.arrayToDataTable([
 
 자세한 설명은 레퍼런스 URL을 참고하세요
 
+## 프로젝트 구조
+
+├─img                       readme.md 파일을 작성하는데 사용된 스크린샷. 플러그인에서 사용되지 않음 
+└─src                       소스 파일
+    ├─ace                   웹 소스 에디터
+    ├─bootstrap-3.3.2-dist  부트스트랩
+    ├─css                   스타일 시트
+    └─js                    자바스크립트
+
 ## 기여
 
 이 프로젝트에 참여하고 싶은 분은 풀 리퀘스트를 보내거나, 이슈를 등록해주세요.
