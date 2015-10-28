@@ -276,13 +276,14 @@ var data = google.visualization.arrayToDataTable([
 for detailed option examples are on the reference URL.
 
 ## Project structure
-
+```
 ├─img                       containing image files used for readme.md. those files not used in plugin. 
 └─src                       
     ├─ace                   Web code editor
     ├─bootstrap-3.3.2-dist  
     ├─css                   
     └─js                    
+```
 
 ## Contribution
 
